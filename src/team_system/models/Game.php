@@ -16,6 +16,10 @@ class Game
         $this->blueTeamId = $blueTeamId;
     }
 
+    static function asNew(): Game {
+        return new Game(GameId::asNew(), 0, 0);
+    }
+
     /**
      * @return GameId
      */
