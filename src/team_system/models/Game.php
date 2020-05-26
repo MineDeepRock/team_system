@@ -6,18 +6,27 @@ namespace team_system\models;
 
 class Game
 {
+    /**
+     * @var GameId
+     */
     private $id;
+    /**
+     * @var TeamId
+     */
     private $redTeamId;
+    /**
+     * @var TeamId
+     */
     private $blueTeamId;
 
-    public function __construct(GameId $id, int $redTeamId, int $blueTeamId) {
+    public function __construct(GameId $id, TeamId $redTeamId, TeamId $blueTeamId) {
         $this->id = $id;
         $this->redTeamId = $redTeamId;
         $this->blueTeamId = $blueTeamId;
     }
 
     static function asNew(): Game {
-        return new Game(GameId::asNew(), 0, 0);
+        return new Game(GameId::asNew(), TeamId::asNew(), TeamId::asNew());
     }
 
     /**
@@ -28,16 +37,16 @@ class Game
     }
 
     /**
-     * @return int
+     * @return TeamId
      */
-    public function getRedTeamId(): int {
+    public function getRedTeamId(): TeamId {
         return $this->redTeamId;
     }
 
     /**
-     * @return int
+     * @return TeamId
      */
-    public function getBlueTeamId(): int {
+    public function getBlueTeamId(): TeamId {
         return $this->blueTeamId;
     }
 }
