@@ -43,15 +43,42 @@ class PlayersRepository
         return Player::fromJson($data);
     }
 
-    public function getPlayers(): void {
+    public function getPlayers(): array {
+        $players = [];
+        $fileNames = glob($this->path);
+        foreach ($fileNames as $filename) {
+            $data = json_decode(file_get_contents($filename));
+            $players[] = Player::fromJson($data);
+        }
 
+        return $players;
     }
 
-    public function getTeamPlayers(TeamId $teamId): void {
+    public function getTeamPlayers(TeamId $teamId): array {
+        $players = [];
 
+        foreach ($this->getPlayers() as $player) {
+            if ($player->getBelongTeamId() !== null) {
+                if ($player->getBelongTeamId()->equal($teamId)) {
+                    $players[] = $player;
+                }
+            }
+        }
+
+        return $players;
     }
 
-    public function getParticipants(GameId $gameId): void {
+    public function getParticipants(GameId $gameId): array {
+        $players = [];
 
+        foreach ($this->getPlayers() as $player) {
+            if ($player->getBelongTeamId() !== null) {
+                if ($player->getJoinedGameId()->equal($gameId)) {
+                    $players[] = $player;
+                }
+            }
+        }
+
+        return $players;
     }
 }

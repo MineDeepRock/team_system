@@ -36,15 +36,15 @@ class PlayersServices
         return $this->repository->getPlayer($name);
     }
 
-    public function getPlayers(): void {
-
+    public function getPlayers(): array {
+        return self::getPlayers();
     }
 
-    public function getTeamPlayers(TeamId $teamId): void {
-
+    public function getTeamPlayers(TeamId $teamId): array {
+        return self::getTeamPlayers($teamId);
     }
 
-    public function getParticipants(GameId $gameId): void {
-
+    public function getParticipants(GameId $gameId): array {
+        return self::getParticipants($gameId);
     }
 }
