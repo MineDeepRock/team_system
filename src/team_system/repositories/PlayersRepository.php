@@ -81,8 +81,6 @@ class PlayersRepository
                 }
             }
         }
-
-        var_dump($players);
         return $players;
     }
 }
