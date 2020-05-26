@@ -20,7 +20,7 @@ class TeamId
         if ($id === null)
             return false;
 
-        return $this->id === $id->id;
+        return $this->id === $id->getText();
     }
 
     /**
