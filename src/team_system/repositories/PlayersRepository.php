@@ -18,7 +18,7 @@ class PlayersRepository
 
     public function register(string $name): void {
         $player = new Player($name);
-        $data = $player->toJson();
+        $data = json_encode($player->toJson());
         file_put_contents($this->path . $name . ".json", $data);
     }
 
@@ -30,26 +30,29 @@ class PlayersRepository
 
     public function joinGame(string $name, string $teamId, string $gameId): void {
         $player = new Player($name, new TeamId($teamId), new GameId($gameId));
-        file_put_contents($this->path . $name . ".json", $player->toJson());
+        file_put_contents($this->path . $name . ".json", json_encode($player->toJson()));
     }
 
     public function quitGame(string $name): void {
         $player = new Player($name, null, null);
-        file_put_contents($this->path . $name . ".json", $player->toJson());
+        file_put_contents($this->path . $name . ".json", json_encode($player->toJson()));
     }
 
     public function getPlayer(string $name): Player {
-        $data = json_decode(file_get_contents($this->path . $name . ".json"));
+        $data = json_decode(file_get_contents($this->path . $name . ".json"), true);
         return Player::fromJson($data);
     }
 
     public function getPlayers(): array {
         $players = [];
-        $fileNames = glob($this->path);
-        foreach ($fileNames as $filename) {
-            $data = json_decode(file_get_contents($filename));
-            $players[] = Player::fromJson($data);
+        $dh = opendir($this->path);
+        while (($fileName = readdir($dh)) !== false) {
+            if (filetype($this->path . $fileName) === "file") {
+                $data = json_decode(file_get_contents($this->path . $fileName), true);
+                $players[] = Player::fromJson($data);
+            }
         }
+        closedir($dh);
 
         return $players;
     }
@@ -79,6 +82,7 @@ class PlayersRepository
             }
         }
 
+        var_dump($players);
         return $players;
     }
 }
