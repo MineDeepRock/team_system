@@ -2,8 +2,3 @@ name: TeamSystem
 main: team_system\Main
 version: 1.0.0
 api: 3.0.0
-
-permissions:
-  TeamSystem:
-    default: false
-    description: "ベース"
