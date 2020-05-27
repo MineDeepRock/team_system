@@ -4,7 +4,7 @@
 namespace team_system\models;
 
 
-class Player
+class PlayerData
 {
     /**
      * @var string
@@ -33,8 +33,8 @@ class Player
         ];
     }
 
-    public static function fromJson(array $json): Player {
-        return new Player(
+    public static function fromJson(array $json): PlayerData {
+        return new PlayerData(
             $json["name"],
             $json["belong_team_id"] === null ? null : new TeamId($json["belong_team_id"]),
             $json["joined_game_id"] === null ? null : new GameId($json["joined_game_id"])

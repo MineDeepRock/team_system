@@ -5,19 +5,19 @@ namespace team_system;
 
 
 use team_system\models\GameId;
-use team_system\models\Player;
+use team_system\models\PlayerData;
 use team_system\models\TeamId;
-use team_system\services\PlayersServices;
+use team_system\services\PlayerDataServices;
 
 class TeamSystem
 {
     /**
-     * @var PlayersServices
+     * @var PlayerDataServices
      */
     private static $playersService;
     private static $instance;
 
-    public function __construct(PlayersServices $playersService) {
+    public function __construct(PlayerDataServices $playersService) {
         self::$playersService = $playersService;
         self::$instance = $this;
     }
@@ -30,21 +30,21 @@ class TeamSystem
         self::$playersService->quitGame($name);
     }
 
-    static function getPlayer(string $name): Player {
-        return self::$playersService->getPlayer($name);
+    static function getPlayerData(string $name): PlayerData {
+        return self::$playersService->getPlayerData($name);
     }
 
-    static function getPlayers(): array {
-        return self::$playersService->getPlayers();
+    static function getAllPlayerData(): array {
+        return self::$playersService->getAllPlayerData();
 
     }
 
-    static function getTeamPlayers(TeamId $teamId): array {
-        return self::$playersService->getTeamPlayers($teamId);
+    static function getTeamPlayerData(TeamId $teamId): array {
+        return self::$playersService->getTeamPlayerData($teamId);
     }
 
-    static function getParticipants(GameId $gameId): array {
-        return self::$playersService->getParticipants($gameId);
+    static function getParticipantData(GameId $gameId): array {
+        return self::$playersService->getParticipantData($gameId);
     }
 
     /**
