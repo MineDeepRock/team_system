@@ -14,7 +14,10 @@ class Game
      * @var bool
      */
     private $isStarted = false;
-
+    /**
+     * @var bool
+     */
+    private $isOpen = false;
 
     public function __construct(GameId $id) {
         $this->id = $id;
@@ -33,6 +36,11 @@ class Game
 
     public function start(): void {
         $this->isStarted = true;
+        $this->isOpen = true;
+    }
+
+    public function close(): void {
+        $this->isOpen = false;
     }
 
     /**
@@ -40,5 +48,12 @@ class Game
      */
     public function isStarted(): bool {
         return $this->isStarted;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOpen(): bool {
+        return $this->isOpen;
     }
 }
