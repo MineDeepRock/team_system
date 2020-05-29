@@ -17,7 +17,7 @@ class Game
     /**
      * @var bool
      */
-    private $isOpen = false;
+    private $isOpen = true;
 
     public function __construct(GameId $id) {
         $this->id = $id;
@@ -36,7 +36,6 @@ class Game
 
     public function start(): void {
         $this->isStarted = true;
-        $this->isOpen = true;
     }
 
     public function close(): void {
