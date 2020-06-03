@@ -17,34 +17,57 @@ class PlayerDataServices
     }
 
     public function register(string $name): void {
-        $this->repository->register($name);
+        $playerData = new PlayerData($name);
+        $this->repository->register($playerData);
     }
 
     public function delete(string $name): void {
-        $this->repository->delete($name);
+        $playerData = $this->getPlayerData($name);
+        $this->repository->delete($playerData);
     }
 
     public function joinGame(string $name, TeamId $teamId, GameId $gameId): void {
-        $this->repository->joinGame($name, $teamId->getText(), $gameId->getText());
+        $playerData = new PlayerData($name, new TeamId($teamId), new GameId($gameId));
+        $this->repository->update($playerData);
     }
 
     public function quitGame(string $name): void {
-        $this->repository->quitGame($name);
+        $playerData = new PlayerData($name, null, null);
+        $this->repository->update($playerData);
     }
 
     public function getPlayerData(string $name): PlayerData {
-        return $this->repository->getPlayerData($name);
+        return $this->repository->get($name);
     }
 
     public function getAllPlayerData(): array {
-        return $this->repository->getAllPlayerData();
+        return $this->repository->getAll();
     }
 
     public function getTeamPlayerData(TeamId $teamId): array {
-        return $this->repository->getTeamPlayerData($teamId);
+        $players = [];
+
+        foreach ($this->getAllPlayerData() as $player) {
+            if ($player->getBelongTeamId() !== null) {
+                if ($player->getBelongTeamId()->equal($teamId)) {
+                    $players[] = $player;
+                }
+            }
+        }
+
+        return $players;
     }
 
     public function getParticipantData(GameId $gameId): array {
-        return $this->repository->getParticipantData($gameId);
+        $players = [];
+
+        foreach ($this->getAllPlayerData() as $player) {
+            if ($player->getBelongTeamId() !== null) {
+                if ($player->getJoinedGameId()->equal($gameId)) {
+                    $players[] = $player;
+                }
+            }
+        }
+        return $players;
     }
 }
