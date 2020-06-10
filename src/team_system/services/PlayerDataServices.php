@@ -27,7 +27,7 @@ class PlayerDataServices
     }
 
     public function joinGame(string $name, TeamId $teamId, GameId $gameId): void {
-        $playerData = new PlayerData($name, new TeamId($teamId), new GameId($gameId));
+        $playerData = new PlayerData($name, $teamId, $gameId);
         $this->repository->update($playerData);
     }
 
